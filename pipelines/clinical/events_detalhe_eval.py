@@ -42,9 +42,9 @@ poetry run python pipelines/clinical/events_detalhe_eval.py \
 Referência:
   model_name: gpt-4o-mini; gpt-oss-120b
   tipo_evento: evolução clínica (internação); anamnese (internação); evolução clínica (ambulatório)
-  Saída: results/clinical/<dataset>/<data_version>/detalhe_<modelo>_eval.csv,
-         detalhe_<modelo>_cohort.jsonl, detalhe_<modelo>_experiment.yaml,
-         detalhe_<modelo>_README.md (ref.: detalhe_<modelo>_summary.png manual)
+  Saída: results/clinical/<dataset>/<data_version>/README.md,
+         detalhe_<modelo>_eval.csv, cohort.jsonl, experiment.yaml,
+         experiment_summary.png (manual, única por pasta)
 
 Notebook interativo: poetry run jupyter lab → notebooks/clinical/1.0-events-detalhe-eval.ipynb
 """

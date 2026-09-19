@@ -12,7 +12,7 @@ Repositório de **execução** para avaliação Wokibi (métricas de ranking, UM
 | `src/wokibi_eval/recommender/` | `eval_recommender` |
 | `src/wokibi_eval/prompts/` | YAML do juiz clínico |
 | `pipelines/clinical/` | Job batch `detalhe` vs `detalhe_{model}` |
-| `results/clinical/` | Artefatos por run (`eval.csv`, `cohort.jsonl`, `experiment.yaml`, `README.md`, `summary.png`) |
+| `results/clinical/` | Por pasta: `README.md`, `experiment_summary.png` + por modelo (`eval.csv`, `cohort.jsonl`, `experiment.yaml`) |
 | `notebooks/recommendation/` | Exploração offline (UMAP, MAP/recall) |
 | `notebooks/clinical/` | Tutorial do job `detalhe` vs `detalhe_{model}` |
 | `tests/` | `pytest` |
@@ -56,8 +56,10 @@ Saída (no repo, versionada por `data_version` do parceiro em `wokibi-data`), em
 | `detalhe_<modelo>_eval.csv` | Métricas por evento |
 | `detalhe_<modelo>_cohort.jsonl` | Registro congelado (`detalhe` + texto processado) |
 | `detalhe_<modelo>_experiment.yaml` | Manifesto da run (filtros, juiz, contagens) |
-| `detalhe_<modelo>_README.md` | Índice do experimento + link para o gráfico |
-| `detalhe_<modelo>_summary.png` | Gráficos de resumo (**você adiciona** após a run) |
+| `README.md` | Índice do experimento (todos os modelos da pasta) |
+| `experiment_summary.png` | Gráfico único do experimento (**você adiciona** após a run) |
+
+Migração de READMEs antigos (`detalhe_*_README.md`): `poetry run python scripts/migrate_clinical_folder_readme.py`
 
 Ex.: `results/clinical/nefrologia/2026-07-05/detalhe_gpt_4o_mini_eval.csv`. Override opcional da base: `WOKIBI_EVAL_OUTPUT_ROOT` no `.env`.
 

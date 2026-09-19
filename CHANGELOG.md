@@ -5,7 +5,8 @@
 ### Added
 
 - Job clínico grava `detalhe_<modelo>_cohort.jsonl` (pares congelados) e `detalhe_<modelo>_experiment.yaml` (manifesto) junto ao CSV de métricas; sync preenche cohort a partir do CSV sem reavaliar.
-- Job clínico grava `detalhe_<modelo>_README.md` com link para `detalhe_<modelo>_summary.png` (figura adicionada manualmente).
+- Job clínico grava `README.md` por pasta; figura única `experiment_summary.png` (todos os modelos no mesmo painel).
+- Script `scripts/migrate_clinical_folder_readme.py` para consolidar `detalhe_*_README.md` legados.
 
 ### Changed
 

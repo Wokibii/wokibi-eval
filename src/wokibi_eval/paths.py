@@ -7,6 +7,9 @@ from wokibi_ai.llm_fields import sanitize_model_name
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
+CLINICAL_FOLDER_README_NAME = "README.md"
+CLINICAL_FOLDER_SUMMARY_NAME = "experiment_summary.png"
+
 
 def repo_root() -> Path:
     """Root of the wokibi-eval repository."""
@@ -56,19 +59,17 @@ def clinical_detalhe_experiment_path(
     )
 
 
-def clinical_detalhe_summary_image_path(
-    dataset: str, data_version: str, model_name: str
+def clinical_detalhe_folder_summary_image_path(
+    dataset: str, data_version: str
 ) -> Path:
-    """Path to optional summary figure PNG (added manually after the eval run)."""
+    """Path to shared summary figure PNG for all models (added manually)."""
     return clinical_detalhe_eval_dir(dataset, data_version) / (
-        f"{_detalhe_model_basename(model_name)}_summary.png"
+        CLINICAL_FOLDER_SUMMARY_NAME
     )
 
 
-def clinical_detalhe_readme_path(
-    dataset: str, data_version: str, model_name: str
-) -> Path:
-    """Path to per-model experiment README with links and figure reference."""
+def clinical_detalhe_folder_readme_path(dataset: str, data_version: str) -> Path:
+    """Path to shared experiment README for all models in a data_version folder."""
     return clinical_detalhe_eval_dir(dataset, data_version) / (
-        f"{_detalhe_model_basename(model_name)}_README.md"
+        CLINICAL_FOLDER_README_NAME
     )

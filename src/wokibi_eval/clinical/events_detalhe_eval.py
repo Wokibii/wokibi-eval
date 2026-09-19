@@ -14,20 +14,18 @@ from wokibi_data.config import LLM_MODEL, partner_parameters, partners_datasets
 
 from wokibi_eval.clinical.experiment_record import (
     append_cohort_record,
-    build_experiment_readme_markdown,
     build_manifest,
     load_cohort_event_ids,
     write_experiment_manifest,
-    write_experiment_readme,
+    write_folder_experiment_readme,
 )
 from wokibi_eval.evaluation.clinical_evaluator import ClinicalEvaluator
 from wokibi_eval.paths import (
+    CLINICAL_FOLDER_README_NAME,
     clinical_detalhe_cohort_path,
     clinical_detalhe_eval_csv_path,
     clinical_detalhe_eval_dir,
     clinical_detalhe_experiment_path,
-    clinical_detalhe_readme_path,
-    clinical_detalhe_summary_image_path,
 )
 
 logger = logging.getLogger(__name__)
@@ -249,24 +247,6 @@ class EventsDetalheEvaluator:
         eval_path = Path(self.eval_paths[model_name])
         cohort_path = Path(self.cohort_paths[model_name])
         experiment_path = Path(self.experiment_paths[model_name])
-        readme_path = clinical_detalhe_readme_path(
-            self.dataset, self.data_version, model_name
-        )
-        summary_image_path = clinical_detalhe_summary_image_path(
-            self.dataset, self.data_version, model_name
-        )
-
-        readme_md = build_experiment_readme_markdown(
-            dataset=self.dataset,
-            data_version=self.data_version,
-            model_name=model_name,
-            experiment_yaml_name=experiment_path.name,
-            eval_csv_name=eval_path.name,
-            cohort_jsonl_name=cohort_path.name,
-            summary_image_name=summary_image_path.name,
-        )
-        write_experiment_readme(readme_path, readme_md)
-
         latest_run = {
             **self._run_params,
             "started_at": self._run_started_at,
@@ -282,8 +262,7 @@ class EventsDetalheEvaluator:
             eval_csv_name=eval_path.name,
             cohort_jsonl_name=cohort_path.name,
             experiment_yaml_name=experiment_path.name,
-            readme_md_name=readme_path.name,
-            summary_image_name=summary_image_path.name,
+            readme_md_name=CLINICAL_FOLDER_README_NAME,
             enable_judge=self.enable_judge,
             judge_model=self.judge_model if self.enable_judge else None,
             latest_run=latest_run,
@@ -401,6 +380,10 @@ class EventsDetalheEvaluator:
                 )
             self._write_experiment_manifest(model_name, finished_at)
 
+        write_folder_experiment_readme(
+            self.eval_dir, self.dataset, self.data_version
+        )
+
 
 def main(
     dataset: str,
@@ -488,7 +471,7 @@ def main(
     - ``detalhe_<modelo>_eval.csv`` (métricas)
     - ``detalhe_<modelo>_cohort.jsonl`` (textos congelados por evento)
     - ``detalhe_<modelo>_experiment.yaml`` (manifesto da run)
-    - ``detalhe_<modelo>_README.md`` (índice; referencia ``detalhe_<modelo>_summary.png``)
+    - ``README.md`` (índice; referencia ``experiment_summary.png``)
 
     ``data_version`` = ``partner_parameters[dataset]`` no wokibi-data.
     """

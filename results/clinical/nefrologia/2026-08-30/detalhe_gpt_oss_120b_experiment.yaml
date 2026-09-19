@@ -7,8 +7,8 @@ artifacts:
   eval_csv: detalhe_gpt_oss_120b_eval.csv
   cohort_jsonl: detalhe_gpt_oss_120b_cohort.jsonl
   experiment_yaml: detalhe_gpt_oss_120b_experiment.yaml
-  readme_md: detalhe_gpt_oss_120b_README.md
-  summary_image: detalhe_gpt_oss_120b_summary.png
+  readme_md: README.md
+  summary_image: experiment_summary.png
 evaluator:
   eval_schema_version: 2
   enable_judge: true

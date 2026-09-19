@@ -1,12 +1,14 @@
 """Tests for repo-local artifact paths."""
 
 from wokibi_eval.paths import (
+    CLINICAL_FOLDER_README_NAME,
     clinical_detalhe_cohort_path,
     clinical_detalhe_eval_csv_path,
     clinical_detalhe_eval_dir,
     clinical_detalhe_experiment_path,
-    clinical_detalhe_readme_path,
-    clinical_detalhe_summary_image_path,
+    clinical_detalhe_folder_readme_path,
+    CLINICAL_FOLDER_SUMMARY_NAME,
+    clinical_detalhe_folder_summary_image_path,
     repo_root,
 )
 
@@ -34,11 +36,11 @@ def test_clinical_detalhe_artifact_paths_default():
     assert clinical_detalhe_experiment_path("uti", "2026-08-30", model) == (
         base / "detalhe_gpt_oss_120b_experiment.yaml"
     )
-    assert clinical_detalhe_readme_path("uti", "2026-08-30", model) == (
-        base / "detalhe_gpt_oss_120b_README.md"
+    assert clinical_detalhe_folder_readme_path("uti", "2026-08-30") == (
+        base / CLINICAL_FOLDER_README_NAME
     )
-    assert clinical_detalhe_summary_image_path("uti", "2026-08-30", model) == (
-        base / "detalhe_gpt_oss_120b_summary.png"
+    assert clinical_detalhe_folder_summary_image_path("uti", "2026-08-30") == (
+        base / CLINICAL_FOLDER_SUMMARY_NAME
     )
 
 
