@@ -13,8 +13,8 @@ include = [
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-wokibi-ai = { version = "^1.3.0", source = "testpypi" }
-wokibi-data = { version = "^1.3.0", source = "testpypi" }
+wokibi-ai = { version = "^1.4.0", source = "testpypi" }
+wokibi-data = { version = "^1.4.0", source = "testpypi" }
 umap-learn = "^0.5.9"
 matplotlib = "^3.8.0"
 fire = "^0.7.1"

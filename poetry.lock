@@ -795,14 +795,14 @@ files = [
 
 [[package]]
 name = "cliid"
-version = "1.33.1"
+version = "1.34.0"
 description = "GenAi"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "cliid-1.33.1-py3-none-any.whl", hash = "sha256:bb3af1cc40f5d73199e07464a1d20c1f637363f64685876db12adcfa7561fd12"},
-    {file = "cliid-1.33.1.tar.gz", hash = "sha256:c77c9cec0a8fb23b18c82bb8860e67b14a02567ba663ad43dfcf1a3bbaebf9ed"},
+    {file = "cliid-1.34.0-py3-none-any.whl", hash = "sha256:3d4f27cdede541b93730404178aa868ffacd5b2da49d8024ebba2c0a818a7720"},
+    {file = "cliid-1.34.0.tar.gz", hash = "sha256:8f5451f414ce4f725924dcdc9d268df82c798ce61c25f497baca9b2b1536b80e"},
 ]
 
 [package.dependencies]
@@ -8596,25 +8596,25 @@ files = [
 
 [[package]]
 name = "wokibi-ai"
-version = "1.3.0"
+version = "1.4.0"
 description = "Wokibi AI agents, recommender, and prompts"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_ai-1.3.0-py3-none-any.whl", hash = "sha256:c8f961de9d176e56ae209bb4b8b64c73230fbcef62c6bf43a1dd89d7dcd3e548"},
-    {file = "wokibi_ai-1.3.0.tar.gz", hash = "sha256:38aa4a01630226ac8e51ddbe1f4ce1a98adb3b2db68dfd3e6502aefdf999161b"},
+    {file = "wokibi_ai-1.4.0-py3-none-any.whl", hash = "sha256:5b3330074a28dcb98e68899989828cc894c6cd9be944e18aeaee9e6ed461c70f"},
+    {file = "wokibi_ai-1.4.0.tar.gz", hash = "sha256:56e51e66bbc902175b9ba756b8011b7718407ee0c0b7661caf36d90b54a4a39e"},
 ]
 
 [package.dependencies]
-cliid = ">=1.33.1,<2.0.0"
+cliid = ">=1.34.0,<2.0.0"
 langchain-openai = ">=1.0.0,<2.0.0"
 langgraph = ">=1.0.2,<2.0.0"
 numpy = ">=2.1.0,<3.0.0"
 pandas = ">=2.2.2,<3.0.0"
 redis = ">=7.0.0,<8.0.0"
 tiktoken = ">=0.7.0,<0.8.0"
-wokibi-data = ">=1.3.0,<2.0.0"
+wokibi-data = ">=1.4.0,<2.0.0"
 
 [package.source]
 type = "legacy"
@@ -8623,18 +8623,18 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.3.0"
+version = "1.4.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.3.0-py3-none-any.whl", hash = "sha256:fd41388255ff83fc0848f23ff3ad5023abe1ca350b26e09dd32a32ce6959b239"},
-    {file = "wokibi_data-1.3.0.tar.gz", hash = "sha256:90c3667de83af91cd1c3be86dc7fa058caaa272183991f5cfcaa7b2edadfbfa4"},
+    {file = "wokibi_data-1.4.0-py3-none-any.whl", hash = "sha256:d0726b7455fa56515ea4f74096bce842ecebca3c3af5a917c3111a4eb6198a39"},
+    {file = "wokibi_data-1.4.0.tar.gz", hash = "sha256:0ceab891f911d546e8c2ef1c05ac7baa9f5006f651861ba45d4a3fce60b67970"},
 ]
 
 [package.dependencies]
-cliid = ">=1.33.1,<2.0.0"
+cliid = ">=1.34.0,<2.0.0"
 duckdb = ">=1.2.2,<2.0.0"
 numpy = "2.1.0"
 openpyxl = ">=3.1.5,<4.0.0"
@@ -9272,4 +9272,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "20308f7713929beb7f0ff664769ec7daca54263023736d5db237aba0dac17ddc"
+content-hash = "34b27a5b3eeea3eedccd6f37efd1f181731bb12d11a915b2f860753de76120ed"
