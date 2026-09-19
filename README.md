@@ -14,6 +14,7 @@ Repositório de **execução** para avaliação Wokibi (métricas de ranking, UM
 | `pipelines/clinical/` | Job batch `detalhe` vs `detalhe_{model}` |
 | `results/clinical/` | CSVs de eval (`<dataset>/<data_version>/detalhe_*_eval.csv`) |
 | `notebooks/recommendation/` | Exploração offline (UMAP, MAP/recall) |
+| `notebooks/clinical/` | Tutorial do job `detalhe` vs `detalhe_{model}` |
 | `tests/` | `pytest` |
 
 Imports: `from wokibi_eval.evaluation...`, `from wokibi_eval.recommender...` (kernel / `poetry run` = venv deste repo).
@@ -58,10 +59,12 @@ Ex.: `results/clinical/nefrologia/2026-07-05/detalhe_gpt_4o_mini_eval.csv`. Over
 
 ```bash
 poetry install --with dev
+poetry install --with clinical   # notebook clinical/1.0-events-detalhe-eval.ipynb
+poetry run python -m spacy download pt_core_news_lg
 poetry run jupyter lab
 ```
 
-Use o **kernel do `.venv`** deste projeto (não é preciso cwd na raiz). Ver [notebooks/README.md](notebooks/README.md).
+Use o **kernel do `.venv`** deste projeto (não é preciso cwd na raiz). Índice e passo a passo: [notebooks/README.md](notebooks/README.md) (recommendation + clinical).
 
 ## Licença
 
