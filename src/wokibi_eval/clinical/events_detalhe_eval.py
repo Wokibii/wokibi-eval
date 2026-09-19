@@ -3,16 +3,30 @@
 import logging
 import os
 from datetime import datetime, timezone
+from pathlib import Path
 
 import pandas as pd
 from tqdm import tqdm
 from wokibi_ai.llm import LLM
-from wokibi_ai.llm_fields import detalhe_field_name, sanitize_model_name
+from wokibi_ai.llm_fields import detalhe_field_name
 from wokibi_data.beans.mongo.event import EventBean
 from wokibi_data.config import LLM_MODEL, partner_parameters, partners_datasets
 
+from wokibi_eval.clinical.experiment_record import (
+    append_cohort_record,
+    build_manifest,
+    load_cohort_event_ids,
+    write_experiment_manifest,
+    write_folder_experiment_readme,
+)
 from wokibi_eval.evaluation.clinical_evaluator import ClinicalEvaluator
-from wokibi_eval.paths import clinical_detalhe_eval_dir
+from wokibi_eval.paths import (
+    CLINICAL_FOLDER_README_NAME,
+    clinical_detalhe_cohort_path,
+    clinical_detalhe_eval_csv_path,
+    clinical_detalhe_eval_dir,
+    clinical_detalhe_experiment_path,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +55,7 @@ class EventsDetalheEvaluator:
 
         self.dataset = dataset
         self.model_names = model_names
+        self.enable_judge = enable_judge
         resolved_judge = judge_model or LLM_MODEL
         self.judge_model = resolved_judge
         self.detalhe_fields = {
@@ -57,12 +72,20 @@ class EventsDetalheEvaluator:
             enable_judge=enable_judge,
         )
 
-        version = partner_parameters[dataset]["data_version"]
-        self.eval_dir = str(clinical_detalhe_eval_dir(dataset, version))
+        self.data_version = partner_parameters[dataset]["data_version"]
+        eval_root = clinical_detalhe_eval_dir(dataset, self.data_version)
+        self.eval_dir = str(eval_root)
         self.eval_paths = {
-            name: os.path.join(
-                self.eval_dir,
-                f"detalhe_{sanitize_model_name(name)}_eval.csv",
+            name: str(clinical_detalhe_eval_csv_path(dataset, self.data_version, name))
+            for name in model_names
+        }
+        self.cohort_paths = {
+            name: str(clinical_detalhe_cohort_path(dataset, self.data_version, name))
+            for name in model_names
+        }
+        self.experiment_paths = {
+            name: str(
+                clinical_detalhe_experiment_path(dataset, self.data_version, name)
             )
             for name in model_names
         }
@@ -70,6 +93,13 @@ class EventsDetalheEvaluator:
             name: self._load_seen_event_ids(path)
             for name, path in self.eval_paths.items()
         }
+        self._seen_cohort_ids = {
+            name: load_cohort_event_ids(path)
+            for name, path in self.cohort_paths.items()
+        }
+        self._new_eval_rows: dict[str, int] = {name: 0 for name in model_names}
+        self._run_started_at: str | None = None
+        self._run_params: dict[str, object] = {}
         logger.info(
             "Evaluating %s for dataset=%s (output=%s, judge=%s, already_done=%s)",
             list(self.detalhe_fields.values()),
@@ -95,6 +125,7 @@ class EventsDetalheEvaluator:
     ) -> None:
         """Evaluate pair and append one CSV row under results/clinical/."""
         row = self.evaluator.evaluate(detalhe, processed)
+        evaluated_at = datetime.now(timezone.utc).isoformat()
         row.update({
             "event_id": event_id,
             "dataset": self.dataset,
@@ -102,7 +133,7 @@ class EventsDetalheEvaluator:
             "detalhe_field": self.detalhe_fields[model_name],
             "judge_model": self.judge_model,
             "tipo_evento": tipo_evento,
-            "evaluated_at": datetime.now(timezone.utc).isoformat(),
+            "evaluated_at": evaluated_at,
             "eval_schema_version": 2,
         })
 
@@ -112,6 +143,131 @@ class EventsDetalheEvaluator:
         pd.DataFrame([row]).to_csv(
             eval_path, mode="a", header=write_header, index=False
         )
+        self._new_eval_rows[model_name] += 1
+
+        event_id_str = str(event_id)
+        if event_id_str not in self._seen_cohort_ids[model_name]:
+            self._append_cohort_row(
+                model_name,
+                event_id_str,
+                detalhe,
+                processed,
+                tipo_evento=tipo_evento,
+                evaluated_at=evaluated_at,
+            )
+
+    def _append_cohort_row(
+        self,
+        model_name: str,
+        event_id: str,
+        detalhe: str,
+        processed: str,
+        *,
+        tipo_evento: str | None,
+        evaluated_at: str | None,
+    ) -> None:
+        append_cohort_record(
+            self.cohort_paths[model_name],
+            {
+                "event_id": event_id,
+                "tipo_evento": tipo_evento,
+                "detalhe": detalhe,
+                "processed": processed,
+                "model_name": model_name,
+                "detalhe_field": self.detalhe_fields[model_name],
+                "evaluated_at": evaluated_at,
+            },
+        )
+        self._seen_cohort_ids[model_name].add(event_id)
+
+    def _sync_cohort_from_eval_csv(self, model_name: str, verbose: bool = False) -> int:
+        """Backfill cohort JSONL rows for event_ids already in the eval CSV."""
+        eval_path = self.eval_paths[model_name]
+        if not os.path.exists(eval_path):
+            return 0
+
+        df = pd.read_csv(eval_path)
+        if "event_id" not in df.columns:
+            return 0
+
+        field = self.detalhe_fields[model_name]
+        added = 0
+        for _, csv_row in df.iterrows():
+            event_id = str(csv_row["event_id"])
+            if event_id in self._seen_cohort_ids[model_name]:
+                continue
+
+            event = self.event_bean.getEventById(self.dataset, event_id)
+            if not event:
+                if verbose:
+                    logger.warning(
+                        "Cohort sync: event %s not found in Mongo", event_id
+                    )
+                continue
+
+            event_dict = event.to_dict()
+            detalhe = event_dict.get("detalhe")
+            processed = event_dict.get(field)
+            if not detalhe or not processed:
+                if verbose:
+                    logger.warning(
+                        "Cohort sync: empty detalhe or %s for event %s",
+                        field,
+                        event_id,
+                    )
+                continue
+
+            tipo = csv_row.get("tipo_evento")
+            if pd.isna(tipo):
+                tipo = event_dict.get("tipo_evento")
+            tipo_evento = str(tipo) if tipo is not None and not pd.isna(tipo) else None
+
+            evaluated_at = csv_row.get("evaluated_at")
+            if pd.isna(evaluated_at):
+                evaluated_at = None
+            else:
+                evaluated_at = str(evaluated_at)
+
+            self._append_cohort_row(
+                model_name,
+                event_id,
+                detalhe,
+                processed,
+                tipo_evento=tipo_evento,
+                evaluated_at=evaluated_at,
+            )
+            added += 1
+        return added
+
+    def _write_experiment_manifest(
+        self,
+        model_name: str,
+        finished_at: str,
+    ) -> None:
+        eval_path = Path(self.eval_paths[model_name])
+        cohort_path = Path(self.cohort_paths[model_name])
+        experiment_path = Path(self.experiment_paths[model_name])
+        latest_run = {
+            **self._run_params,
+            "started_at": self._run_started_at,
+            "finished_at": finished_at,
+            "new_eval_rows": self._new_eval_rows[model_name],
+            "cohort_row_count": len(self._seen_cohort_ids[model_name]),
+        }
+        manifest = build_manifest(
+            dataset=self.dataset,
+            data_version=self.data_version,
+            model_name=model_name,
+            detalhe_field=self.detalhe_fields[model_name],
+            eval_csv_name=eval_path.name,
+            cohort_jsonl_name=cohort_path.name,
+            experiment_yaml_name=experiment_path.name,
+            readme_md_name=CLINICAL_FOLDER_README_NAME,
+            enable_judge=self.enable_judge,
+            judge_model=self.judge_model if self.enable_judge else None,
+            latest_run=latest_run,
+        )
+        write_experiment_manifest(experiment_path, manifest)
 
     def run(
         self,
@@ -123,6 +279,15 @@ class EventsDetalheEvaluator:
         """Evaluate events that already have every requested detalhe_{model}."""
         if max_events is not None and max_events < 1:
             raise ValueError("max_events must be >= 1 when set")
+
+        self._run_started_at = datetime.now(timezone.utc).isoformat()
+        self._run_params = {
+            "tipo_evento": tipo_evento,
+            "max_events": max_events,
+            "break_on": break_on,
+        }
+        for name in self.model_names:
+            self._new_eval_rows[name] = 0
 
         fields = list(self.detalhe_fields.values())
         logger.info(
@@ -203,6 +368,21 @@ class EventsDetalheEvaluator:
             skip += len(events)
             if break_on or done:
                 break
+
+        finished_at = datetime.now(timezone.utc).isoformat()
+        for model_name in self.model_names:
+            synced = self._sync_cohort_from_eval_csv(model_name, verbose=verbose)
+            if synced and verbose:
+                logger.info(
+                    "Cohort sync: appended %s rows for model=%s",
+                    synced,
+                    model_name,
+                )
+            self._write_experiment_manifest(model_name, finished_at)
+
+        write_folder_experiment_readme(
+            self.eval_dir, self.dataset, self.data_version
+        )
 
 
 def main(
@@ -286,8 +466,14 @@ def main(
             verbose=True,
         )
 
-    Saída: ``results/clinical/<dataset>/<data_version>/detalhe_<modelo>_eval.csv``
-    (``data_version`` = ``partner_parameters[dataset]`` no wokibi-data).
+    Saída em ``results/clinical/<dataset>/<data_version>/``:
+
+    - ``detalhe_<modelo>_eval.csv`` (métricas)
+    - ``detalhe_<modelo>_cohort.jsonl`` (textos congelados por evento)
+    - ``detalhe_<modelo>_experiment.yaml`` (manifesto da run)
+    - ``README.md`` (índice; referencia ``experiment_summary.png``)
+
+    ``data_version`` = ``partner_parameters[dataset]`` no wokibi-data.
     """
     model_names = _normalize_model_names(model_name)
 

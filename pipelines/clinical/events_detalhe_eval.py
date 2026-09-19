@@ -21,10 +21,10 @@ Execução manual (cwd = raiz wokibi-eval)
 Pipeline CLI (equivalente ao notebook notebooks/clinical/1.0-events-detalhe-eval.ipynb):
 
 poetry run python pipelines/clinical/events_detalhe_eval.py \
-  --dataset=uti \
+  --dataset=nefrologia \
   --tipo_evento='evolução clínica (internação)' \
-  --model_name=gpt-oss-120b \
-  --judge_model=gemini-2.5-flash \
+  --model_name=gpt-oss-120b,gpt-4o-mini,gemini-2.5-flash \
+  --judge_model=gemini-flash-lite-latest \
   --verbose=True \
   --break_on=False \
   --max_events=33
@@ -42,7 +42,9 @@ poetry run python pipelines/clinical/events_detalhe_eval.py \
 Referência:
   model_name: gpt-4o-mini; gpt-oss-120b
   tipo_evento: evolução clínica (internação); anamnese (internação); evolução clínica (ambulatório)
-  Saída: results/clinical/<dataset>/<data_version>/detalhe_<modelo_sanitizado>_eval.csv
+  Saída: results/clinical/<dataset>/<data_version>/README.md,
+         detalhe_<modelo>_eval.csv, cohort.jsonl, experiment.yaml,
+         experiment_summary.png (manual, única por pasta)
 
 Notebook interativo: poetry run jupyter lab → notebooks/clinical/1.0-events-detalhe-eval.ipynb
 """
