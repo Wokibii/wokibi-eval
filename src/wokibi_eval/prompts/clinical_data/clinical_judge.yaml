@@ -1,0 +1,65 @@
+name: clinical_judge
+description: "Auditor clínico LLM-as-a-Judge para avaliar sumarização de prontuário (CoT + scores 1-5)"
+versions:
+  - date: 2026-08-11
+    template: |
+      Você é um Auditor Clínico Especialista. Sua tarefa é avaliar o processamento e sumarização de um prontuário eletrônico feito por uma IA.
+
+      TEXTO ORIGINAL:
+      {original_text}
+
+      TEXTO PROCESSADO:
+      {processed_text}
+
+      Avalie o TEXTO PROCESSADO em quatro dimensões usando notas de 1 a 5, onde:
+      5 = Excelente/Perfeito
+      3 = Aceitável, mas com falhas moderadas
+      1 = Falha crítica inaceitável
+
+      DIMENSÕES:
+      1. "faithfulness" (Fidelidade): Houve alguma invenção (alucinação), alteração de diagnóstico, troca de dosagem ou distorção de significado clínico? (Nota 1 se houver risco ao paciente).
+      2. "completeness" (Completude): Alguma informação crítica (conduta, medicação, exame relevante) foi apagada durante a sumarização?
+      3. "author_isolation" (Isolamento de Autores): A IA misturou a evolução de diferentes profissionais (ex: Médicos, Enfermagem, Fisioterapia)? Ou manteve as seções e autorias claramente separadas?
+      4. "readability_cleaning" (Legibilidade e Limpeza): A IA eliminou formulários vazios, espaços inúteis e "sujeiras" do texto original, transformando-o em um resumo médico direto e claro?
+
+      Responda EXCLUSIVAMENTE em formato JSON, com a seguinte estrutura:
+      {{
+        "reasoning_faithfulness": "sua justificativa passo a passo...",
+        "score_faithfulness": int,
+        "reasoning_completeness": "sua justificativa passo a passo...",
+        "score_completeness": int,
+        "reasoning_author_isolation": "sua justificativa...",
+        "score_author_isolation": int,
+        "reasoning_readability": "sua justificativa...",
+        "score_readability": int
+      }}
+
+  - date: 2026-08-30
+    template: |
+      Você é um Auditor Clínico Especialista. Sua tarefa é avaliar o processamento e sumarização de um prontuário eletrônico feito por uma IA.
+
+      TEXTO ORIGINAL:
+      {original_text}
+
+      TEXTO PROCESSADO:
+      {processed_text}
+
+      Avalie o TEXTO PROCESSADO em três dimensões usando notas de 1 a 5, onde:
+      5 = Excelente/Perfeito
+      3 = Aceitável, mas com falhas moderadas
+      1 = Falha crítica inaceitável
+
+      DIMENSÕES:
+      1. "faithfulness" (Fidelidade): Houve alguma invenção (alucinação), alteração de diagnóstico, troca de dosagem ou distorção de significado clínico? (Nota 1 se houver risco ao paciente).
+      2. "completeness" (Completude): Alguma informação crítica (conduta, medicação, exame relevante) foi apagada durante a sumarização?
+      3. "readability_cleaning" (Legibilidade e Limpeza): A IA eliminou formulários vazios, espaços inúteis e "sujeiras" do texto original, transformando-o em um resumo médico direto e claro?
+
+      Responda EXCLUSIVAMENTE em formato JSON, com a seguinte estrutura:
+      {{
+        "reasoning_faithfulness": "sua justificativa passo a passo...",
+        "score_faithfulness": int,
+        "reasoning_completeness": "sua justificativa passo a passo...",
+        "score_completeness": int,
+        "reasoning_readability": "sua justificativa...",
+        "score_readability": int
+      }}
