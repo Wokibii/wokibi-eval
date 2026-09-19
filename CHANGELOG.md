@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Job clínico grava `detalhe_<modelo>_cohort.jsonl` (pares congelados) e `detalhe_<modelo>_experiment.yaml` (manifesto) junto ao CSV de métricas; sync preenche cohort a partir do CSV sem reavaliar.
+- Job clínico grava `detalhe_<modelo>_README.md` com link para `detalhe_<modelo>_summary.png` (figura adicionada manualmente).
+
 ### Changed
 
 - Dependências: removidos pins diretos de `numpy` e `pandas` (via `wokibi-ai` / `wokibi-data`).

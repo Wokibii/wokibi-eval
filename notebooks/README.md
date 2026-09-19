@@ -24,7 +24,7 @@ Imports: use `wokibi_eval.*` (sem `sys.path`). Pacotes publicados: `wokibi_ai`, 
 |----------|---------|----------|-------------------|
 | [recommendation/1.0-embeddings-view.ipynb](recommendation/1.0-embeddings-view.ipynb) | Recommender | Mongo (embeddings individuals + catalogs) | Gráfico UMAP 2D |
 | [recommendation/2.0-wokirec-test-user-item.ipynb](recommendation/2.0-wokirec-test-user-item.ipynb) | Recommender | Parquet local, Mongo, `Recommender` | MAP@k, recall@k, `eval_recommender` |
-| [clinical/1.0-events-detalhe-eval.ipynb](clinical/1.0-events-detalhe-eval.ipynb) | Clínico | Mongo (`detalhe`, `detalhe_{model}`) | CSV em `results/clinical/` |
+| [clinical/1.0-events-detalhe-eval.ipynb](clinical/1.0-events-detalhe-eval.ipynb) | Clínico | Mongo (`detalhe`, `detalhe_{model}`) | `eval.csv`, `cohort.jsonl`, `experiment.yaml`, `README.md` (+ `summary.png` manual) |
 
 ## `recommendation/1.0-embeddings-view.ipynb`
 
@@ -83,7 +83,7 @@ Imports: use `wokibi_eval.*` (sem `sys.path`). Pacotes publicados: `wokibi_ai`, 
 3. `EventsDetalheEvaluator(...).run(break_on=True, max_events=1)` — um evento.
 4. Amostra com `break_on=False` e `max_events` (paginação em lotes de 100 no backend).
 5. `pd.read_csv` + agregados das métricas (compressão, NER, BioBERT, juiz).
-6. Filtro de outliers; nota de idempotência por `event_id` no CSV.
+6. Filtro de outliers; idempotência por `event_id` no CSV; cohort JSONL + manifest YAML na mesma pasta (texto clínico no JSONL — repo privado).
 
 **Pré-requisitos extras:** grupo Poetry `clinical`, modelo spaCy `pt_core_news_lg`, Mongo com `detalhe` e `detalhe_{model}` preenchidos.
 

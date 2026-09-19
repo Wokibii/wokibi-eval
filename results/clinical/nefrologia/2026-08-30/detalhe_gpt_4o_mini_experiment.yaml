@@ -1,0 +1,25 @@
+schema_version: 1
+dataset: nefrologia
+data_version: '2026-08-30'
+model_name: gpt-4o-mini
+detalhe_field: detalhe_gpt_4o_mini
+artifacts:
+  eval_csv: detalhe_gpt_4o_mini_eval.csv
+  cohort_jsonl: detalhe_gpt_4o_mini_cohort.jsonl
+  experiment_yaml: detalhe_gpt_4o_mini_experiment.yaml
+  readme_md: detalhe_gpt_4o_mini_README.md
+  summary_image: detalhe_gpt_4o_mini_summary.png
+evaluator:
+  eval_schema_version: 2
+  enable_judge: true
+  judge_model: gemini-flash-lite-latest
+latest_run:
+  tipo_evento: evolução clínica (internação)
+  max_events: 33
+  break_on: false
+  started_at: '2026-09-19T19:25:15.872432+00:00'
+  finished_at: '2026-09-19T19:28:28.972771+00:00'
+  new_eval_rows: 27
+  cohort_row_count: 27
+package:
+  wokibi_eval: 0.1.0

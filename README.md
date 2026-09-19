@@ -12,7 +12,7 @@ Repositório de **execução** para avaliação Wokibi (métricas de ranking, UM
 | `src/wokibi_eval/recommender/` | `eval_recommender` |
 | `src/wokibi_eval/prompts/` | YAML do juiz clínico |
 | `pipelines/clinical/` | Job batch `detalhe` vs `detalhe_{model}` |
-| `results/clinical/` | CSVs de eval (`<dataset>/<data_version>/detalhe_*_eval.csv`) |
+| `results/clinical/` | Artefatos por run (`eval.csv`, `cohort.jsonl`, `experiment.yaml`, `README.md`, `summary.png`) |
 | `notebooks/recommendation/` | Exploração offline (UMAP, MAP/recall) |
 | `notebooks/clinical/` | Tutorial do job `detalhe` vs `detalhe_{model}` |
 | `tests/` | `pytest` |
@@ -49,11 +49,19 @@ poetry run python pipelines/clinical/events_detalhe_eval.py \
 
 `--max_events` limita quantos eventos do Mongo são processados nesta run (use com `--break_on=False`; omita para varrer todos os elegíveis).
 
-Saída (no repo, versionada por `data_version` do parceiro em `wokibi-data`):
+Saída (no repo, versionada por `data_version` do parceiro em `wokibi-data`), em `results/clinical/<dataset>/<data_version>/` por modelo:
 
-`results/clinical/<dataset>/<data_version>/detalhe_<modelo_sanitizado>_eval.csv`
+| Arquivo | Conteúdo |
+|---------|----------|
+| `detalhe_<modelo>_eval.csv` | Métricas por evento |
+| `detalhe_<modelo>_cohort.jsonl` | Registro congelado (`detalhe` + texto processado) |
+| `detalhe_<modelo>_experiment.yaml` | Manifesto da run (filtros, juiz, contagens) |
+| `detalhe_<modelo>_README.md` | Índice do experimento + link para o gráfico |
+| `detalhe_<modelo>_summary.png` | Gráficos de resumo (**você adiciona** após a run) |
 
 Ex.: `results/clinical/nefrologia/2026-07-05/detalhe_gpt_4o_mini_eval.csv`. Override opcional da base: `WOKIBI_EVAL_OUTPUT_ROOT` no `.env`.
+
+**PHI:** o `cohort.jsonl` contém texto clínico; versione no Git apenas em repositório privado e conforme a política interna.
 
 ## Notebooks
 
