@@ -8596,14 +8596,14 @@ files = [
 
 [[package]]
 name = "wokibi-ai"
-version = "1.4.0"
+version = "1.5.0"
 description = "Wokibi AI agents, recommender, and prompts"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_ai-1.4.0-py3-none-any.whl", hash = "sha256:5b3330074a28dcb98e68899989828cc894c6cd9be944e18aeaee9e6ed461c70f"},
-    {file = "wokibi_ai-1.4.0.tar.gz", hash = "sha256:56e51e66bbc902175b9ba756b8011b7718407ee0c0b7661caf36d90b54a4a39e"},
+    {file = "wokibi_ai-1.5.0-py3-none-any.whl", hash = "sha256:f0f5e229c8663ea37750f7322191c063c8e4063bb811890e2cb222698ac2ea84"},
+    {file = "wokibi_ai-1.5.0.tar.gz", hash = "sha256:5670b5985256478819fd10f5af5dafd867f2097e0cccea2344035bae0aea6c4f"},
 ]
 
 [package.dependencies]
@@ -9272,4 +9272,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "22f21bcc140a55d6a2fac7738a34ffd657e4af2d1b053a0275ef92d448a0c408"
+content-hash = "945bcddc42df6acb4ffcbcfafa9b51609e9920be1b08eaf167dde414c0d91c34"
