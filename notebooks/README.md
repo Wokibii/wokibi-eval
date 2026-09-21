@@ -7,7 +7,7 @@ Exploração offline de **avaliação**: recommender (UMAP, MAP/recall) e pipeli
 1. Na raiz de **wokibi-eval**: `poetry install` (instala `wokibi_eval` no venv).
 2. Jupyter: `poetry install --with dev`.
 3. Notebook clínico: `poetry install --with clinical` e `poetry run python -m spacy download pt_core_news_lg`.
-4. Copie [`.env.example`](../.env.example) → `.env` na raiz (Mongo, `GOOGLE_API_KEY` para juiz LLM, etc.).
+4. Copie [`.env.example`](../.env.example) → `.env` na raiz (`WOKIBI_RUNTIME`, Mongo, `GOOGLE_API_KEY`; juiz alternativo comentado no example).
 5. Inicie Jupyter com o **interpretador do venv**:
 
    ```bash
