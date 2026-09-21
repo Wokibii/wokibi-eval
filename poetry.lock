@@ -795,14 +795,14 @@ files = [
 
 [[package]]
 name = "cliid"
-version = "1.34.0"
+version = "1.34.1"
 description = "GenAi"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "cliid-1.34.0-py3-none-any.whl", hash = "sha256:3d4f27cdede541b93730404178aa868ffacd5b2da49d8024ebba2c0a818a7720"},
-    {file = "cliid-1.34.0.tar.gz", hash = "sha256:8f5451f414ce4f725924dcdc9d268df82c798ce61c25f497baca9b2b1536b80e"},
+    {file = "cliid-1.34.1-py3-none-any.whl", hash = "sha256:dc93fcefd0523ad41af74c0113e3081abdc8e4e08c8b06ea3b9530c59aebf031"},
+    {file = "cliid-1.34.1.tar.gz", hash = "sha256:4b970d1a7dd9186e170d98182db0cbffa08b6181b646177198c0129ddaefbf5d"},
 ]
 
 [package.dependencies]
@@ -8623,18 +8623,18 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.5.0"
+version = "1.6.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.5.0-py3-none-any.whl", hash = "sha256:fb75129d2a78dac92a9951a5f4d894d27a72dd616e70d7494c65c6543afa9b0f"},
-    {file = "wokibi_data-1.5.0.tar.gz", hash = "sha256:8073794f1d486257bfc3808495c56067993bc388cc75b3eb31b406d7dab4a1e4"},
+    {file = "wokibi_data-1.6.0-py3-none-any.whl", hash = "sha256:7bda9f43b5a7fb14078bd10c0f189250093e6381586c78722dc8c70fe89f395f"},
+    {file = "wokibi_data-1.6.0.tar.gz", hash = "sha256:7885458f6ee45b29ea8810797c5552d5f4bf2fe1e619bebd28a0121e779bff6f"},
 ]
 
 [package.dependencies]
-cliid = ">=1.34.0,<2.0.0"
+cliid = ">=1.34.1,<2.0.0"
 duckdb = ">=1.2.2,<2.0.0"
 numpy = "2.1.0"
 openpyxl = ">=3.1.5,<4.0.0"
@@ -9272,4 +9272,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "68717fa01c5d8bdcdb5422f5659e318a00385dc9fd0a7b00efcd7c95491884cb"
+content-hash = "fe6bf69282b67af92d3210dc0190ade1de45f6b8f459d1ceeeba85e09a0ff395"
