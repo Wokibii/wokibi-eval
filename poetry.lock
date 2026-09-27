@@ -8623,14 +8623,14 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.6.0"
+version = "1.7.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.6.0-py3-none-any.whl", hash = "sha256:7bda9f43b5a7fb14078bd10c0f189250093e6381586c78722dc8c70fe89f395f"},
-    {file = "wokibi_data-1.6.0.tar.gz", hash = "sha256:7885458f6ee45b29ea8810797c5552d5f4bf2fe1e619bebd28a0121e779bff6f"},
+    {file = "wokibi_data-1.7.0-py3-none-any.whl", hash = "sha256:0391d95f2a7fd631b0914dd192fa917aaa925c7ad1d597cfbdb71952cc72677d"},
+    {file = "wokibi_data-1.7.0.tar.gz", hash = "sha256:46a4cd6b5681f8fb1601641529483b31ba20e4355eced1ded1745fd771c8df69"},
 ]
 
 [package.dependencies]
