@@ -8596,25 +8596,25 @@ files = [
 
 [[package]]
 name = "wokibi-ai"
-version = "1.6.0"
+version = "1.7.0"
 description = "Wokibi AI agents, recommender, and prompts"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_ai-1.6.0-py3-none-any.whl", hash = "sha256:d4f64b4ceaecb667a0e044987c141784b686eae09104f037fa729bccf9d0cea9"},
-    {file = "wokibi_ai-1.6.0.tar.gz", hash = "sha256:e3ca483018d2da0c50ea7abd37eac63e6377ddc29452dcd4516d0ad7c926df84"},
+    {file = "wokibi_ai-1.7.0-py3-none-any.whl", hash = "sha256:7bebf12bb911935ed48ebba367129c538d598f9b041401480adcd013f241f3b6"},
+    {file = "wokibi_ai-1.7.0.tar.gz", hash = "sha256:448b5cb60413a0eea6a24f31e277915365a079b71b4c65ae382290c571dd0c7a"},
 ]
 
 [package.dependencies]
-cliid = ">=1.34.0,<2.0.0"
+cliid = ">=1.34.1,<2.0.0"
 langchain-openai = ">=1.0.0,<2.0.0"
 langgraph = ">=1.0.2,<2.0.0"
 numpy = ">=2.1.0,<3.0.0"
 pandas = ">=2.2.2,<3.0.0"
 redis = ">=7.0.0,<8.0.0"
 tiktoken = ">=0.7.0,<0.8.0"
-wokibi-data = ">=1.5.0,<2.0.0"
+wokibi-data = ">=1.6.0,<2.0.0"
 
 [package.source]
 type = "legacy"
