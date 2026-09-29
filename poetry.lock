@@ -8596,14 +8596,14 @@ files = [
 
 [[package]]
 name = "wokibi-ai"
-version = "1.7.0"
+version = "1.9.0"
 description = "Wokibi AI agents, recommender, and prompts"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_ai-1.7.0-py3-none-any.whl", hash = "sha256:7bebf12bb911935ed48ebba367129c538d598f9b041401480adcd013f241f3b6"},
-    {file = "wokibi_ai-1.7.0.tar.gz", hash = "sha256:448b5cb60413a0eea6a24f31e277915365a079b71b4c65ae382290c571dd0c7a"},
+    {file = "wokibi_ai-1.9.0-py3-none-any.whl", hash = "sha256:8e8f860a50c681893781c67daa15d2a92ec6bdc2e975a4bc47f1352d9a3a2f4b"},
+    {file = "wokibi_ai-1.9.0.tar.gz", hash = "sha256:782450dbb69476e3d02737530fbebf920a873d5cf6d41e32456c13a35f538486"},
 ]
 
 [package.dependencies]
@@ -8614,7 +8614,7 @@ numpy = ">=2.1.0,<3.0.0"
 pandas = ">=2.2.2,<3.0.0"
 redis = ">=7.0.0,<8.0.0"
 tiktoken = ">=0.7.0,<0.8.0"
-wokibi-data = ">=1.6.0,<2.0.0"
+wokibi-data = ">=1.8.0,<2.0.0"
 
 [package.source]
 type = "legacy"
@@ -8623,14 +8623,14 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.7.0"
+version = "1.8.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
 python-versions = ">=3.12,<4.0"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.7.0-py3-none-any.whl", hash = "sha256:0391d95f2a7fd631b0914dd192fa917aaa925c7ad1d597cfbdb71952cc72677d"},
-    {file = "wokibi_data-1.7.0.tar.gz", hash = "sha256:46a4cd6b5681f8fb1601641529483b31ba20e4355eced1ded1745fd771c8df69"},
+    {file = "wokibi_data-1.8.0-py3-none-any.whl", hash = "sha256:3a5c9329b47ab07d3830fd3b41aa87a27ed44b8b8418e0fb8c563eed3acc267f"},
+    {file = "wokibi_data-1.8.0.tar.gz", hash = "sha256:a2f9d76702e4a7f0d6b2d0352afaca787c5e3f7d51416a8f05661156e3322567"},
 ]
 
 [package.dependencies]
@@ -9272,4 +9272,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "fe6bf69282b67af92d3210dc0190ade1de45f6b8f459d1ceeeba85e09a0ff395"
+content-hash = "563fb7410904067e62d90d5a6d0360f4eb2c4eb1baed0394bb08acf538ac7aa7"
