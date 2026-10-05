@@ -3,7 +3,6 @@ Test module for ranking evaluation functions.
 """
 
 from wokibi_eval.evaluation.ranking import mean_average_precision_at_k, recall_at_k, _preparar_dados_para_metrica
-import pytest
 import numpy as np
 
 
