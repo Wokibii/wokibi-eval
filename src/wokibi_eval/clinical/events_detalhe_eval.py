@@ -401,7 +401,7 @@ def main(
     para cada model_name (cohort alinhado quando há vários modelos).
 
     Args:
-        dataset: Parceiro/coleção (ex. nefrologia, uti). Em código, ``dataset=""``
+        dataset: Parceiro/coleção (ex. nefrologia, cancer_mama). Em código, ``dataset=""``
             processa todos os ``partners_datasets``.
         model_name: Um ou mais IDs de modelo. Aceita string única, vários separados
             por vírgula, ou lista/tupla (API Python).
@@ -424,7 +424,7 @@ def main(
 
         # Amostra de 100 eventos
         poetry run python pipelines/clinical/events_detalhe_eval.py \\
-          --dataset=uti --model_name=gpt-oss-120b \\
+          --dataset=nefrologia --model_name=gpt-oss-120b \\
           --break_on=False --max_events=100
 
         # Vários modelos (mesmo evento precisa ter todos os detalhe_{model})
@@ -435,13 +435,13 @@ def main(
 
         # Filtro por tipo (aspas no shell se houver espaços)
         poetry run python pipelines/clinical/events_detalhe_eval.py \\
-          --dataset=uti \\
+          --dataset=nefrologia \\
           --tipo_evento='evolução clínica (internação)' \\
           --model_name=gpt-oss-120b --break_on=False
 
         # Vários tipos (JSON no Fire)
         poetry run python pipelines/clinical/events_detalhe_eval.py \\
-          --dataset=uti \\
+          --dataset=nefrologia \\
           --tipo_evento='["anamnese (internação)","evolução clínica (internação)"]' \\
           --model_name=gpt-oss-120b --break_on=False
 
@@ -451,14 +451,14 @@ def main(
 
         # Juiz com modelo explícito
         poetry run python pipelines/clinical/events_detalhe_eval.py \\
-          --dataset=uti --model_name=gpt-oss-120b \\
+          --dataset=nefrologia --model_name=gpt-oss-120b \\
           --judge_model=gemini-2.5-flash --break_on=True
 
     Python::
 
         main(dataset="nefrologia", model_name="gpt-4o-mini", break_on=True)
         main(
-            dataset="uti",
+            dataset="nefrologia",
             model_name=["gpt-4o-mini", "gpt-oss-120b"],
             tipo_evento=["evolução clínica (internação)", "anamnese (internação)"],
             break_on=False,
