@@ -46,7 +46,7 @@ def test_append_cohort_and_load_ids(tmp_path):
 def test_write_experiment_manifest_round_trip(tmp_path):
     path = tmp_path / "experiment.yaml"
     manifest = build_manifest(
-        dataset="uti",
+        dataset="nefrologia",
         data_version="2026-08-30",
         model_name="gpt-oss-120b",
         detalhe_field="detalhe_gpt_oss_120b",
@@ -65,7 +65,7 @@ def test_write_experiment_manifest_round_trip(tmp_path):
 
     loaded = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert loaded["schema_version"] == 1
-    assert loaded["dataset"] == "uti"
+    assert loaded["dataset"] == "nefrologia"
     assert loaded["artifacts"]["cohort_jsonl"] == "detalhe_gpt_oss_120b_cohort.jsonl"
     assert loaded["artifacts"]["readme_md"] == CLINICAL_FOLDER_README_NAME
     assert loaded["artifacts"]["summary_image"] == CLINICAL_FOLDER_SUMMARY_NAME
@@ -114,9 +114,9 @@ def test_build_folder_experiment_readme_markdown_two_models():
 
 def test_write_folder_experiment_readme(tmp_path):
     (tmp_path / "detalhe_a_eval.csv").write_text("", encoding="utf-8")
-    path = write_folder_experiment_readme(tmp_path, "uti", "2026-01-01")
+    path = write_folder_experiment_readme(tmp_path, "nefrologia", "2026-01-01")
     assert path.name == CLINICAL_FOLDER_README_NAME
-    assert "uti / 2026-01-01" in path.read_text(encoding="utf-8")
+    assert "nefrologia / 2026-01-01" in path.read_text(encoding="utf-8")
 
 
 def test_migrate_eval_folder_dry_run_keeps_legacy(tmp_path):
@@ -129,7 +129,7 @@ def test_migrate_eval_folder_dry_run_keeps_legacy(tmp_path):
         {"artifacts": {"readme_md": "detalhe_a_README.md"}},
     )
 
-    result = migrate_eval_folder(tmp_path, "uti", "v1", dry_run=True)
+    result = migrate_eval_folder(tmp_path, "nefrologia", "v1", dry_run=True)
     assert result["readme_written"] is True
     assert legacy.exists()
     assert not (tmp_path / CLINICAL_FOLDER_README_NAME).exists()
@@ -145,7 +145,7 @@ def test_migrate_eval_folder_writes_and_removes_legacy(tmp_path):
         {"artifacts": {"readme_md": "detalhe_a_README.md"}},
     )
 
-    migrate_eval_folder(tmp_path, "uti", "v1", dry_run=False)
+    migrate_eval_folder(tmp_path, "nefrologia", "v1", dry_run=False)
     assert (tmp_path / CLINICAL_FOLDER_README_NAME).exists()
     assert not legacy.exists()
     updated = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
