@@ -8623,14 +8623,14 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.11.0"
+version = "1.12.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
-python-versions = ">=3.12,<4.0"
+python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.11.0-py3-none-any.whl", hash = "sha256:d4325a5928389ff2514c404d0bba59a2aee641a5e699c6735c73152a7ff3e75b"},
-    {file = "wokibi_data-1.11.0.tar.gz", hash = "sha256:859a5e5118f1fc510aee624cf6958286005266eeeb39c39853ad1a639498b058"},
+    {file = "wokibi_data-1.12.0-py3-none-any.whl", hash = "sha256:e93d56b0d697b3a501cb144dde171810648a9e503b0f9d9cbde1fe11057047be"},
+    {file = "wokibi_data-1.12.0.tar.gz", hash = "sha256:e7a1da35d4ad368136d829654caa59aba3bedfc70273bbdeaa07c83a2aa3e908"},
 ]
 
 [package.dependencies]
@@ -9272,4 +9272,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "b8f73b5e3c42eb682f0db959e3f41557e4ddcdaef7155de716740519439fe436"
+content-hash = "1007811f487191c938aa0a5c4b822574645e3f6ab8f51ac3351a01bc0f360292"
