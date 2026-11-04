@@ -9307,25 +9307,23 @@ tenacity = "9.1.4"
 
 [[package]]
 name = "wokibi-ai"
-version = "1.10.0"
+version = "1.12.0"
 description = "Wokibi AI agents, recommender, and prompts"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_ai-1.10.0-py3-none-any.whl", hash = "sha256:a978eb289f183feef8cc6de67cc628441d3dd93370a86f62d17f223ffb67a561"},
-    {file = "wokibi_ai-1.10.0.tar.gz", hash = "sha256:6fc53e9ab938fe0d8785dae6e28df8bd9714e281d8a9a02e47661d5002943796"},
+    {file = "wokibi_ai-1.12.0-py3-none-any.whl", hash = "sha256:6f8e5eb8fe16c21eb76f9972c8ad678624af39666133331b6ce275f4357e0721"},
+    {file = "wokibi_ai-1.12.0.tar.gz", hash = "sha256:63202f00164b8f71817539ffc66693ede2a16155da4dbc858990d55e1917cc4f"},
 ]
 
 [package.dependencies]
 cliid = ">=1.35.0,<2.0.0"
+langchain-core = ">=1.0.0,<2.0.0"
 langchain-openai = ">=1.0.0,<2.0.0"
 langgraph = ">=1.0.2,<2.0.0"
-numpy = ">=2.1.0,<3.0.0"
-pandas = ">=2.2.2,<3.0.0"
 redis = ">=7.0.0,<8.0.0"
-tiktoken = ">=0.7.0,<0.8.0"
-wokibi-data = ">=1.11.0,<2.0.0"
+wokibi-data = ">=1.14.0,<2.0.0"
 
 [package.source]
 type = "legacy"
@@ -9334,14 +9332,14 @@ reference = "testpypi"
 
 [[package]]
 name = "wokibi-data"
-version = "1.13.0"
+version = "1.14.0"
 description = "Wokibi data layer: beans, marts, extractors, config"
 optional = false
 python-versions = ">=3.12,<3.13"
 groups = ["main"]
 files = [
-    {file = "wokibi_data-1.13.0-py3-none-any.whl", hash = "sha256:adac853223e9d0c8e8744a4639717feacf41115343b1bde9f5b81b82de1a5283"},
-    {file = "wokibi_data-1.13.0.tar.gz", hash = "sha256:9dfe516eac770501763a45b6d6cd33b7b65ba0113b644003e887c365457cb617"},
+    {file = "wokibi_data-1.14.0-py3-none-any.whl", hash = "sha256:ee69696233285d4624791b9cf1a6fd8884a7210937837679f23794cc0e75b594"},
+    {file = "wokibi_data-1.14.0.tar.gz", hash = "sha256:160e2e851ccc2958e6c4b3cafd26d0531cfd1c663f211c2af6d2bcb0f0de3508"},
 ]
 
 [package.dependencies]
@@ -9987,4 +9985,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "259b75ba4567f5b38f3eda02840bdf06c2742358bffe95e0d1f883ed0222fca3"
+content-hash = "4cd659072b837df258e2f8b9d565cfd605cd03c4b51ec348c88a14ab51abba8c"
